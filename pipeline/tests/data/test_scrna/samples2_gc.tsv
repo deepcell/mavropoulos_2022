@@ -1,0 +1,4 @@
+SampleName	RunID	Instrument	Index1	Index2	Count
+W1_R3	Run1	Gemini	TTGAGAGTCA	AACCTGGTAG	gs://dc-bioinformatics-analysis/scratch/NGS/scRNA/test/data/W1_R3/counts/raw_feature_bc_matrix.h5
+W2_R3	Run1	Gemini	GTCCTTCGGC	TCATGCACAG	gs://dc-bioinformatics-analysis/scratch/NGS/scRNA/test/data/W2_R3/counts/raw_feature_bc_matrix.h5
+W3_R3	Run1	Gemini	GAGCAAGGGC	ATTGACTTGG	gs://dc-bioinformatics-analysis/scratch/NGS/scRNA/test/data/W3_R3/counts/raw_feature_bc_matrix.h5

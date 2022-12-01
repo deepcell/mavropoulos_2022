@@ -1,0 +1,14 @@
+pipelines:
+  pull-requests:
+    '**':
+      - step:
+          name: build docker; test; output Sphinx doc
+          script:
+            - mkdir $BITBUCKET_CLONE_DIR/build
+            - docker build -t askcell:latest . # name and tag are for reference in the next step of the script
+            - docker run askcell:latest  # explicitly run pytest
+            - docker run -v $BITBUCKET_CLONE_DIR/build:/opt/askcell/build:rw askcell:latest make html
+          services:
+            - docker
+          caches:
+            - docker

@@ -1,0 +1,11 @@
+===================================================
+Release Notes for askcell scRNA-seq workflow v0.0.1
+===================================================
+
+| Current Release:  v0.0.1
+| Previous Release: -
+
+Release Description
+===================
+
+This is the initial release of askcell scRNA-seq workflow.

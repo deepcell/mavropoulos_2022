@@ -1,0 +1,7 @@
+[sample]
+sampleid = {type="str"}
+label = {type="str"}
+runid = {type="str"}
+
+[sample.input]
+h5_count = {type="path"}

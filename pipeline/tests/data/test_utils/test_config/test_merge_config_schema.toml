@@ -1,0 +1,5 @@
+[gc]
+id      = {type="str"}
+region  = {type="str", default="us-central-1"}
+gcs     = {type="str", default="gs://us.artifacts.dc-bioinformatics.appspot.com/"}
+profile = {type="str", default="default"}

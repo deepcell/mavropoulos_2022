@@ -1,0 +1,5 @@
+[gc]
+id      = ""
+region  = "us-central-1"
+gcs     = "gs://us.artifacts.dc-bioinformatics.appspot.com/"
+profile = "default"

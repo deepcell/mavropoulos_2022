@@ -1,0 +1,47 @@
+[workflow]
+name = "demultiplexer"
+
+[bin]
+bcl2fastq2 = "/usr/local/bin/bcl2fastq"
+
+[params]
+input_dir = ""
+output_dir = ""
+samplesheet = ""
+rename_fastq = false
+remove_undetermined_reads = false
+start_cycle = 1
+
+[input]
+input_dir = "{params.input_dir}"
+samplesheet = "{params.samplesheet}"
+
+[scratch]
+
+[output]
+out_dir = "{params.output_dir}"
+samplesheet = "{params.samplesheet}"
+summary = "{.out_dir}/demux_summary.json"
+stats = "{.out_dir}/Stats"
+conversion_stats = "{.stats}/ConversionStats.xml"
+bcl2fastq_stats = "{.stats}/Stats.json"
+
+[flowcell]
+timeout = 28800
+
+[sample]
+
+[bcl2fastq2.options]
+processing-threads = 40
+
+[bcl2fastq2.flags]
+ignore-missing-bcls = false
+ignore-missing-filter = false
+ignore-missing-positions = false
+create-fastq-for-index-reads = false
+with-failed-reads = false
+write-fastq-reverse-complement = false
+no-bgzf-compression = false
+no-lane-splitting = true
+find-adapters-with-sliding-window = false
+version = false

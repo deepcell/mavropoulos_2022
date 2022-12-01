@@ -1,0 +1,64 @@
+[workflow]
+name = "wgs"
+
+[sample]
+runid = "mock_run_id"
+input_dir = "mock_input_dir/mock_run_id"
+
+[params]
+input_dir = ""
+output_dir = ""
+
+[input]
+input_dir = "{params.input_dir}"
+
+[output]
+output_dir = "{params.output_dir}"
+summary = "{.output_dir}/wgs_summary.json"
+
+[scratch]
+
+[merge_bias_cv.options]
+bias_cv_threshold = 0.3
+include_chromosome = "^chr([2][0-2]$|[1][0-9]$|[1-9]$)"
+
+[readcounter.options]
+quality = 30
+chromosome = "chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX,chrY"
+
+[get_wgs_cov_bias.options]
+norm_samples = [
+    "GM12878-100c-Res-KAPA_S3" ,
+    "GM12878-200c-Res-KAPA_S4",
+    "GM24143-100c-Res-KAPA_S7",
+    "GM24143-200c-Res-KAPA_S8",
+    "GM24143-50c-Res-KAPA_S6",
+    "GM24149-100c-Res-KAPA_S11",
+    "GM24149-200c-Res-KAPA_S12",
+    "GM24149-50c-Res-KAPA_S10",
+    "GM24385-100c-Res-KAPA_S15",
+    "GM24385-200c-Res-KAPA_S16",
+    "GM24385-50c-Res-KAPA_S14",
+    "HFL1-100c-Res-KAPA_S23",
+    "HFL1-200c-Res-KAPA_S24",
+    "HFL1-50c-Res-KAPA_S22",
+]
+
+[parse_bam.options]
+min_mapq = 50
+alignment_bsize = 1000000
+gc_bsize = 1000
+
+[ichorcna.options]
+ploidy = "c(1.75,2,2.25)"
+normal_fraction = "c(0.01,0.1,0.25,0.5,0.75,0.9,0.99)"
+chrs = "c(1:22,\"X\")"
+chr_train = "c(1:22)"
+txne = 0.9999
+txn_strength = 10000
+
+[ichorcna.flags]
+include_homd = false
+estimate_normal = true
+estimate_ploidy = true
+estimate_scprevalence = false

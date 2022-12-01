@@ -1,0 +1,96 @@
+[tool.poetry]
+name = "askcell"
+version = "0.0.0"
+description = "Deepcell Bio bioinformatics pipeline"
+authors = ["Deepcell Bio"]
+classifiers = [
+    "Private :: Do Not Upload",
+    "Intended Audience :: Science/Research",
+    "License :: Other/Proprietary License",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Unix",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Bioinformatics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+include = ["README.md", "setup.cfg", "askcell/py.typed"]
+
+[tool.poetry.scripts]
+askcell = "askcell.askcell:main"
+call_naive = "askcell.naive_caller:main"
+collect_metrics = "askcell.collect_metrics:main"
+check_swap = "askcell.check_swap:main"
+summarize = "askcell.summarize:main"
+scrna = "askcell.scrna.scrna:main"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.11"
+numpy = "==1.21.6"
+pandas = ">=1.3.4"
+pathy = {extras = ["gcs"], version = ">=0.6.1"}
+plotnine = ">=0.8.0"
+pyarrow = ">=8.0.0"
+pybedtools = ">=0.8.2"
+pyfaidx = ">=0.6.3"
+pyranges = ">=0.0.112"
+pysam = ">=0.17.0"
+scikit-learn = ">=1.0.2"
+scipy = ">=1.7.2"
+toml = ">=0.10.2"
+types-toml = "^0.10.4"
+fastparquet = "^0.8.1"
+openpyxl = "^3.0.10"
+setuptools = ">=62.6.0"
+interop = "==1.1.23"
+anndata = "^0.8.0"
+scanpy = "^1.9.1"
+leidenalg = "^0.8.10"
+pybiomart = "^0.2.0"
+scrublet = "^0.2.3"
+fpdf2 = "^2.5.5"
+
+[tool.poetry.dev-dependencies]
+coverage = {extras = ["toml"], version = ">=5.5"}
+flake8 = ">=3.9.2"
+flake8-blind-except = ">=0.2.0"
+flake8-bugbear = ">=21.3.2"
+flake8-builtins = ">=1.5.3"
+flake8-comprehensions = ">=3.3.1"
+flake8-docstrings = ">=1.5.0"
+flake8-mutable = ">=1.2.0"
+flake8-rst-docstrings = ">=0.0.14"
+flake8-use-pathlib = ">=0.2.1"
+mypy = ">=0.812"
+mypy-extensions = ">=0.4.3"
+pre-commit = ">=2.15.0"
+pytest = ">=6.2.2"
+pytest-cache = ">=1.0"
+pytest-cov = ">=2.11.1"
+pytest-flake8 = ">=1.0.7"
+pytest-html = ">=3.1.1"
+pytest-mypy = ">=0.8.0"
+Sphinx = ">=3.5.3"
+sphinx-argparse = ">=0.2.5"
+sphinx-rtd-theme = ">=0.5.2"
+sphinxcontrib-bibtex = ">=2.2.0"
+sphinxcontrib-blockdiag = ">=2.0.0"
+sphinxcontrib-napoleon = ">=0.7"
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+lines_between_types = 1
+lines_after_imports = 2
+
+[tool.poetry-dynamic-versioning]
+enable = true
+
+[build-system]
+requires = ["poetry>=1.1.4", "poetry-dynamic-versioning"]
+build-backend = "poetry.masonry.api"
