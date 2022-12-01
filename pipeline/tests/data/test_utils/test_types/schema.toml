@@ -1,0 +1,7 @@
+[type_string]
+string = {type="str", default="a"}
+
+[type_list]
+list_int = {type="list[int]",   default=[1, 2, 3, 4, 5]}
+list_float = {type="list[float]", default=[0.1, 0.2, 0.3, 0.4, 0.5]}
+list_string = {type="list[str]", default=["a", "b", "c"]}

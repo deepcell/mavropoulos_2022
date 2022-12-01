@@ -1,0 +1,177 @@
+{
+ "Flowcell" : "H5VLNDMXX",
+ "RunNumber" : 60,
+ "RunId" : "180109_A00114_0060_BH5VLNDMXX",
+ "ReadInfosForLanes" : [
+  {
+   "LaneNumber" : 1,
+   "ReadInfos" : [
+    {
+     "Number" : 1,
+     "NumCycles" : 102,
+     "IsIndexedRead" : false
+    },
+    {
+     "Number" : 1,
+     "NumCycles" : 8,
+     "IsIndexedRead" : true
+    }
+   ]
+  },
+  {
+   "LaneNumber" : 2,
+   "ReadInfos" : [
+    {
+     "Number" : 1,
+     "NumCycles" : 102,
+     "IsIndexedRead" : false
+    },
+    {
+     "Number" : 1,
+     "NumCycles" : 8,
+     "IsIndexedRead" : true
+    }
+   ]
+  }
+ ],
+ "ConversionResults" : [
+  {
+   "LaneNumber" : 1,
+   "TotalClustersRaw" : 2880700416,
+   "TotalClustersPF" : 1426490172,
+   "Yield" : 145501997544,
+   "DemuxResults" : [
+    {
+     "SampleId" : "Sample_X1390060",
+     "SampleName" : "X1390060",
+     "IndexMetrics" : [
+      {
+       "IndexSequence" : "CTGACGTC",
+       "MismatchCounts" : {
+        "0" : 4553202,
+        "1" : 77462
+       }
+      }
+     ],
+     "NumberReads" : 4630664,
+     "Yield" : 472327728,
+     "ReadMetrics" : [
+      {
+       "ReadNumber" : 1,
+       "Yield" : 472327728,
+       "YieldQ30" : 393420865,
+       "QualityScoreSum" : 16159276568,
+       "TrimmedBases" : 269974
+      }
+     ]
+    },
+    {
+     "SampleId" : "Sample_X1390065",
+     "SampleName" : "X1390065",
+     "IndexMetrics" : [
+      {
+       "IndexSequence" : "TGTTAATG",
+       "MismatchCounts" : {
+        "0" : 3797038,
+        "1" : 74132
+       }
+      }
+     ],
+     "NumberReads" : 3871170,
+     "Yield" : 394859340,
+     "ReadMetrics" : [
+      {
+       "ReadNumber" : 1,
+       "Yield" : 394859340,
+       "YieldQ30" : 329311796,
+       "QualityScoreSum" : 13513382086,
+       "TrimmedBases" : 234111
+      }
+     ]
+    }
+   ],
+   "Undetermined" : {
+     "NumberReads" : 131059116,
+     "Yield" : 13368029832,
+     "ReadMetrics" : [
+      {
+       "ReadNumber" : 1,
+       "Yield" : 13368029832,
+       "YieldQ30" : 10229754171,
+       "QualityScoreSum" : 436346240379,
+       "TrimmedBases" : 45821189
+      }
+    ]
+   }
+  },
+  {
+   "LaneNumber" : 2,
+   "TotalClustersRaw" : 2880700416,
+   "TotalClustersPF" : 1442404817,
+   "Yield" : 147125291334,
+   "DemuxResults" : [
+    {
+     "SampleId" : "Sample_X1390060",
+     "SampleName" : "X1390060",
+     "IndexMetrics" : [
+      {
+       "IndexSequence" : "CTGACGTC",
+       "MismatchCounts" : {
+        "0" : 4608598,
+        "1" : 80601
+       }
+      }
+     ],
+     "NumberReads" : 4689199,
+     "Yield" : 478298298,
+     "ReadMetrics" : [
+      {
+       "ReadNumber" : 1,
+       "Yield" : 478298298,
+       "YieldQ30" : 395976117,
+       "QualityScoreSum" : 16330728271,
+       "TrimmedBases" : 274030
+      }
+     ]
+    },
+    {
+     "SampleId" : "Sample_X1390065",
+     "SampleName" : "X1390065",
+     "IndexMetrics" : [
+      {
+       "IndexSequence" : "TGTTAATG",
+       "MismatchCounts" : {
+        "0" : 3842447,
+        "1" : 77179
+       }
+      }
+     ],
+     "NumberReads" : 3919626,
+     "Yield" : 399801852,
+     "ReadMetrics" : [
+      {
+       "ReadNumber" : 1,
+       "Yield" : 399801852,
+       "YieldQ30" : 331490329,
+       "QualityScoreSum" : 13656478432,
+       "TrimmedBases" : 236883
+      }
+     ]
+    }
+   ],
+   "Undetermined" : {
+     "NumberReads" : 130928758,
+     "Yield" : 13354733316,
+     "ReadMetrics" : [
+      {
+       "ReadNumber" : 1,
+       "Yield" : 13354733316,
+       "YieldQ30" : 10060369520,
+       "QualityScoreSum" : 433178385260,
+       "TrimmedBases" : 45578659
+      }
+     ]
+   }
+  }
+ ]
+}

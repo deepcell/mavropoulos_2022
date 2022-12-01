@@ -1,0 +1,11 @@
+[a.b.params]
+a = {type="int", default=1}
+b = {type="str", default="-p {sample.id} --s {.a}"}
+c = {type="int", default=20}
+d = {type="str", default="-p {.c}"}
+
+[e.params]
+f = {type="path", default="{e.input.x}"}
+g = {type="path", default="{e.scratch.y}"}
+h = {type="path", default="{e.input.z}"}
+i = {type="path", default="{e.scratch.ss}"}

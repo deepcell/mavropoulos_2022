@@ -1,0 +1,11 @@
+[human]
+base = "/tmp_human"
+genome = "/tmp_human/genome/GRCh38_no_alt.p13.genome.fa"
+
+[mouse]
+base = "/tmp_mouse"
+rrna_fa = "/tmp_mouse/index/bwa_rRNA/mm_rRNA.fasta"
+
+[swift]
+panels = "/tmp_human/panels"
+sid_snp = "/tmp_human/panels/swift_sid/swift_sid.snp.grch38.bed"

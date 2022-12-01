@@ -1,0 +1,19 @@
+Markers	CellType
+CD3E	T cells
+CD3E	CD4+ T cells
+CD4	CD4+ T cells
+CD3E	CD8+ T cells
+CD8A	CD8+ T cells
+GNLY	NK cells
+NKG7	NK cells
+MS4A1	B cells
+CD14	CD14+ Monocytes
+LYZ	CD14+ Monocytes
+CST3	CD14+ Monocytes
+MS4A7	CD14+ Monocytes
+FCGR3A	FCGR3A+ Monocytes
+LYZ	FCGR3A+ Monocytes
+CST3	FCGR3A+ Monocytes
+MS4A7	FCGR3A+ Monocytes
+FCER1A	DCs
+CST3	DCs

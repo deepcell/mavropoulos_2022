@@ -1,0 +1,2 @@
+[merge_bias_cv.options]
+bias_cv_threshold = 0.3

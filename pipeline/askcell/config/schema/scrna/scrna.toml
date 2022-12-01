@@ -1,0 +1,397 @@
+[workflow]
+name = {type="str", required=true}
+workflow_version = {type="str", required=true}
+environment = {type="str", required=true}
+request_template_version = {type="str", required=true}
+transcriptome_10x_version = {type="str", required=true}
+markers_version = {type="str", required=true}
+runid = {type="str", required=true}
+fcid = {type="str", required=true}
+sampleid = {type="str", required=true}
+requestid = {type="str", required=true}
+external_results_base  = {type="path", required=true}
+chemistry = {type="str", required=true}
+
+[bin]
+cellranger = {type="str", required=true}
+
+[input]
+input_dir = {type="path", required=true}
+resources_dir = {type="path", required=true}
+request = {type="path", required=true}
+metadata = {type="path", required=true}
+run_dir = {type="path", required=false}
+reads_dir = {type="path", required=false}
+
+[output]
+output_dir = {type="path", required=true}
+logs_dir = {type="path", required=true}
+
+log = {type="path", required=true}
+
+[scratch]
+scratch_dir = {type="path", required=true}
+local_temp_dir = {type="path", required=true}
+local_shared_dir = {type="path", required=true}
+
+[params]
+threads = {type="int", required=true}
+use_introns_for_count = {type="bool", required=true}
+keep_temp = {type="bool", required=true}
+keep_undetermined_reads = {type="bool", required=true}
+depth_to_normalize = {type="int", required=true}
+log_data = {type="bool", required=true}
+scale_data = {type="bool", required=true}
+correct_batch = {type="bool", required=true}
+max_mito_pct_allowed = {type="int", required=true}
+max_ribo_pct_allowed = {type="int", required=true}
+regress_out_cellcycle = {type="bool", required=true}
+n_pcs =  {type="int", required=true}
+n_neighbors =  {type="int", required=true}
+
+# below sections are modified thru interpolation only
+[demux.input]
+run_dir = {type="path", required=true}
+resources_dir = {type="path", required=true}
+request = {type="path", required=true}
+metadata = {type="path", required=true}
+chromium_index = {type="path", required=true}
+steps = {type="list[str]", required=true}
+steps_funcs = {type="list[str]", required=true}
+
+[demux.output]
+output_dir = {type="path", required=true}
+configs_dir = {type="path", required=true}
+config_global = {type="path", required=true}
+config_local = {type="path", required=true}
+ss = {type="path", required=true}
+reports_dir = {type="path", required=true}
+conversion_stats = {type="path", required=true}
+bcl2fastq_stats = {type="path", required=true}
+metrics_result = {type="path", required=true}
+metrics_result_pq = {type="path", required=true}
+fastq_dir = {type="path", required=true}
+
+[demux.scratch]
+scratch_dir = {type="path", required=true}
+10x_dir = {type="path", required=true}
+
+[demux.params]
+threads = {type="int", required=true}
+keep_undetermined_reads = {type="bool", required=true}
+
+[demux.demultiplex.input]
+run_dir = {type="path", required=true}
+index = {type="path", required=true}
+
+[demux.demultiplex.output]
+fastq_dir = {type="path", required=true}
+ss = {type="path", required=true}
+reports_dir = {type="path", required=true}
+conversion_stats = {type="path", required=true}
+bcl2fastq_stats = {type="path", required=true}
+
+[demux.demultiplex.params]
+runid = {type="str", required=true}
+run_dir = {type="path", required=true}
+ss = {type="path", required=true}
+output_dir = {type="path", required=true}
+threads = {type="int", required=true}
+
+[demux.demultiplex_qc.input]
+conversion_stats = {type="path", required=true}
+bcl2fastq_stats = {type="path", required=true}
+
+[demux.demultiplex_qc.output]
+metrics_result = {type="path", required=true}
+metrics_result_pq = {type="path", required=true}
+
+[demux.demultiplex_qc.params]
+min_median_reads = {type="float", required=true}
+min_total_reads = {type="int", required=true}
+min_fraction_q30 = {type="float", required=true}
+# add more
+
+[count.input]
+reads_dir = {type="path", required=true}
+resources_dir = {type="path", required=true}
+request = {type="path", required=true}
+metadata = {type="path", required=true}
+steps = {type="list[str]", required=true}
+steps_funcs = {type="list[str]", required=true}
+
+[count.output]
+output_dir = {type="path", required=true}
+configs_dir = {type="path", required=true}
+analysis_dir = {type="path", required=true}
+metrics_dir = {type="path", required=true}
+counts_dir = {type="path", required=true}
+raw_counts_dir = {type="path", required=true}
+alignments_dir = {type="path", required=true}
+
+config_global = {type="path", required=true}
+config_local = {type="path", required=true}
+cloupe = {type="path", required=true}
+molecule_info = {type="path", required=true}
+raw_matrix_h5 = {type="path", required=true}
+raw_barcodes = {type="path", required=true}
+raw_features = {type="path", required=true}
+raw_matrix = {type="path", required=true}
+filtered_matrix_h5 = {type="path", required=true}
+metrics_result = {type="path", required=true}
+metrics_result_pq = {type="path", required=true}
+alignments = {type="path", required=true}
+alignments_index = {type="path", required=true}
+summary_report = {type="path", required=true}
+metadata2 = {type="path", required=true}
+
+[count.scratch]
+scratch_dir = {type="path", required=true}
+10x_dir = {type="path", required=true}
+
+[count.params]
+threads = {type="int", required=true}
+use_introns_for_count = {type="bool", required=true}
+
+[count.10x.input]
+fastq_dir = {type="path", required=true}
+transcriptome_dir = {type="path", required=true}
+
+[count.10x.output]
+10x_dir = {type="path", required=true}
+cloupe = {type="path", required=true}
+molecule_info = {type="path", required=true}
+raw_matrix_h5 = {type="path", required=true}
+raw_barcodes = {type="path", required=true}
+raw_features = {type="path", required=true}
+raw_matrix = {type="path", required=true}
+filtered_matrix_h5 = {type="path", required=true}
+metrics_summary = {type="path", required=true}
+alignments = {type="path", required=true}
+alignments_index = {type="path", required=true}
+summary_report = {type="path", required=true}
+metadata2 = {type="path", required=true}
+
+[count.10x.params]
+id = {type="str", required=true}
+fastqs = {type="path", required=true}
+sample = {type="str", required=true}
+transcriptome = {type="path", required=true}
+use_intron = {type="bool", required=true}
+chemistry = {type="str", required=true}
+threads = {type="int", required=true}
+
+[count.qc.input]
+sid = {type="str", required=true}
+metrics = {type="path", required=true}
+
+[count.qc.output]
+metrics_result = {type="path", required=true}
+metrics_result_pq = {type="path", required=true}
+
+[count.qc.params]
+min_number_cells = {type="int", required=true}
+min_reads_per_cell_rate = {type="float", required=true}
+min_median_genes_per_cell = {type="float", required=true}
+min_umi_count_per_cell = {type="int", required=true}
+min_total_genes_detected = {type="int", required=true}
+
+[analyze.input]
+input_dir = {type="path", required=true}
+resources_dir = {type="path", required=true}
+request = {type="path", required=true}
+metadata = {type="path", required=true}
+steps = {type="list[str]", required=true}
+steps_funcs = {type="list[str]", required=true}
+
+[analyze.output]
+output_dir = {type="path", required=true}
+configs_dir = {type="path", required=true}
+config_global = {type="path", required=true}
+config_local = {type="path", required=true}
+data_dir = {type="path", required=true}
+h5ad = {type="path", required=true}
+raw_aggregated_h5ad = {type="path", required=true}
+qc_filtered_h5ad = {type="path", required=true}
+plot_dir = {type="path", required=true}
+violin_plot_pre = {type="path", required=true}
+scatter_plot_pre = {type="path", required=true}
+box_plot_pre = {type="path", required=true}
+violin_plot = {type="path", required=true}
+scatter_plot = {type="path", required=true}
+sexbias_plot1 = {type="path", required=true}
+sexbias_plot2 = {type="path", required=true}
+cellcycle_plot = {type="path", required=true}
+box_plot = {type="path", required=true}
+umap_plot = {type="path", required=true}
+pca_plot = {type="path", required=true}
+hvg_plot = {type="path", required=true}
+rank_plot = {type="path", required=true}
+props_plot = {type="path", required=true}
+doublet_plot = {type="path", required=true}
+metrics_dir = {type="path", required=true}
+preqc_summary = {type="path", required=true}
+marker_umap_plot = {type="path", required=true}
+marker_dotplot = {type="path", required=true}
+marker_matrix_plot = {type="path", required=true}
+marker_tracks_plot = {type="path", required=true}
+rank = {type="path", required=true}
+pdf_report = {type="path", required=true}
+
+[analyze.scratch]
+scratch_dir = {type="path", required=true}
+
+[analyze.params]
+depth_to_normalize = {type="int", required=true}
+log_data = {type="bool", required=true}
+scale_data = {type="bool", required=true}
+correct_batch = {type="bool", required=true}
+max_mito_pct_allowed = {type="int", required=true}
+max_ribo_pct_allowed = {type="int", required=true}
+regress_out_cellcycle = {type="bool", required=true}
+n_pcs =  {type="int", required=true}
+n_neighbors =  {type="int", required=true}
+
+[analyze.scanpy.input]
+counts_dir = {type="path", required=true}
+cellcycle_genes = {type="path", required=true}
+markers = {type="path", required=true}
+
+[analyze.scanpy.output]
+scratch_dir = {type="path", required=true}
+h5ad = {type="path", required=true}
+raw_aggregated_h5ad = {type="path", required=true}
+qc_filtered_h5ad = {type="path", required=true}
+violin_plot_pre = {type="path", required=true}
+scatter_plot_pre = {type="path", required=true}
+box_plot_pre = {type="path", required=true}
+violin_plot = {type="path", required=true}
+scatter_plot = {type="path", required=true}
+sexbias_plot1 = {type="path", required=true}
+sexbias_plot2 = {type="path", required=true}
+cellcycle_plot = {type="path", required=true}
+box_plot = {type="path", required=true}
+umap_plot = {type="path", required=true}
+pca_plot = {type="path", required=true}
+hvg_plot = {type="path", required=true}
+rank_plot = {type="path", required=true}
+props_plot = {type="path", required=true}
+doublet_plot = {type="path", required=true}
+preqc_summary = {type="path", required=true}
+marker_umap_plot = {type="path", required=true}
+marker_dotplot = {type="path", required=true}
+marker_matrix_plot = {type="path", required=true}
+marker_tracks_plot = {type="path", required=true}
+rank = {type="path", required=true}
+pdf_report = {type="path", required=true}
+
+[analyze.scanpy.params]
+remove_mito_genes = {type="bool", required=true}
+remove_hb_genes = {type="bool", required=true}
+correct_batch = {type="bool", required=true}
+regress_out_cellcycle = {type="bool", required=true}
+
+filter_genes = {type="list[str]", required=true}
+mt_gene_name = {type="list[str]", required=true}
+ribo_gene_name = {type="list[str]", required=true}
+hb_gene_name_pattern = {type="str", required=true}
+chemistry = {type="str", required=true}
+requestid = {type="str", required=true}
+
+min_genes = {type="int", required=true}
+min_cells = {type="int", required=true}
+max_pct_counts_mt = {type="int", required=true}
+min_pct_counts_ribo = {type="int", required=true}
+max_pct_counts_ribo = {type="int", required=true}
+
+[analyze.scanpy.params.pca]
+min_mean = {type="float", required=true}
+max_mean = {type="float", required=true}
+min_disp = {type="float", required=true}
+max_sd = {type="float", required=true}
+n_pcs = {type="int", required=true}
+n_neighbors = {type="int", required=true}
+svd_solver = {type="str", required=true}
+umap_plot = {type="path", required=true}
+pca_plot = {type="path", required=true}
+hvg_plot = {type="path", required=true}
+use_highly_variable_genes_only = {type="bool", required=true}
+n_top_genes = {type="int", required=true}
+regress_out_variables = {type="list[str]", required=true}
+regress_cellcycle_genes = {type="bool", required=true}
+
+[analyze.scanpy.params.SC3Pv2]
+max_n_genes_by_counts = {type="int", required=true}
+min_n_genes_by_counts = {type="int", required=true}
+
+[analyze.scanpy.params.SC3Pv3]
+max_n_genes_by_counts = {type="int", required=true}
+min_n_genes_by_counts = {type="int", required=true}
+
+[analyze.scanpy.params.preQC.violin_plots]
+keys = {type="list[str]", required=true}
+use_raw = {type="bool", required=true}
+groupby = {type="str", required=true}
+filename = {type="path", required=true}
+
+[analyze.scanpy.params.preQC.scatter_plots]
+use_raw = {type="bool", required=true}
+filename = {type="path", required=true}
+
+[analyze.scanpy.params.preQC.box_plots]
+num_top_genes = {type="int", required=true}
+filename = {type="path", required=true}
+
+[analyze.scanpy.params.QC.violin_plots]
+keys = {type="list[str]", required=true}
+use_raw = {type="bool", required=true}
+groupby = {type="str", required=true}
+filename = {type="path", required=true}
+
+[analyze.scanpy.params.QC.scatter_plots]
+use_raw = {type="bool", required=true}
+filename = {type="path", required=true}
+
+[analyze.scanpy.params.QC.box_plots]
+num_top_genes = {type="int", required=true}
+filename = {type="path", required=true}
+
+[analyze.scanpy.params.QC.sexbias_plots]
+use_raw = {type="bool", required=true}
+filename1 = {type="path", required=true}
+filename2 = {type="path", required=true}
+keys = {type="list[str]", required=true}
+groupby = {type="str", required=true}
+
+[analyze.scanpy.params.QC.cellcycle_plots]
+filename = {type="path", required=true}
+keys = {type="list[str]", required=true}
+groupby = {type="str", required=true}
+
+[analyze.scanpy.params.normalize]
+target_depth = {type="int", required=true}
+is_to_log = {type="bool", required=true}
+is_to_scale = {type="bool", required=true}
+
+[analyze.scanpy.params.doublets]
+filename = {type="path", required=true}
+
+[analyze.scanpy.params.marker_plots]
+markers = {type="path", required=true}
+keys = {type="list[str]", required=true}
+color_map = {type="str", required=true}
+marker_filename1 = {type="path", required=true}
+marker_filename2 = {type="path", required=true}
+marker_filename3 = {type="path", required=true}
+marker_filename4 = {type="path", required=true}
+
+[analyze.scanpy.params.gene_ranks]
+rank_group = {type="str", required=true}
+num_genes_from_rank = {type="int", required=true}
+filename = {type="path", required=true}
+rank_plot = {type="path", required=true}
+
+[analyze.scanpy.params.cluster_proportion]
+sample_key = {type="str", required=true}
+cluster_key = {type="str", required=true}
+filename = {type="path", required=true}

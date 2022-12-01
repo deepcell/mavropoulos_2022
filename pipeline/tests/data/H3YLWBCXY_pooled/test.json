@@ -1,0 +1,27 @@
+{
+    "PLATFORM": "hiseq",
+    "APPLICATION": "HiSeq Control Software",
+    "APP_VERSION": "2.2.58",
+    "CHEMISTRY": "HiSeq Rapid Flow Cell v2",
+    "RTA_VERSION": "1.18.64",
+    "RUNINFO": {
+        "FCID": "H3YLWBCXY",
+        "INSTRUMENT": "D00768",
+        "NUM_LANES": 2,
+        "READ_TYPE": "PE"
+    },
+    "SEQSTAT": {
+        "ALIGNED_PHIX_PCT": 0.5333488881587982,
+        "CLUSTERS_PASSING_PCT": 96.94084738619077,
+        "CLUSTERS_PASSING_PCT_QC_PASS": true,
+        "CLUSTER_DENSITY": 961.22075,
+        "CLUSTER_DENSITY_QC_PASS": true,
+        "OCCUPIED_PCT": 0,
+        "OCCUPIED_PCT_QC_PASS": null,
+        "Q30_PCT": 94.2432918548584,
+        "Q30_PCT_QC_PASS": true,
+        "YIELD": 103.54598999023438,
+        "YIELD_QC_PASS": null
+    },
+    "SIDE": "A"
+}

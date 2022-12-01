@@ -1,0 +1,98 @@
+[swift_sid.run.total_yield]
+threshold = 10
+
+[swift_sid.run.pct_bases_gt_q30]
+threshold = 80
+
+[swift_sid.run.frac_clusters_pf]
+threshold = 0.8
+
+[swift_sid.run.cluster_density.high]
+threshold = 270
+
+[swift_sid.run.cluster_density.low]
+threshold = 120
+
+[swift_sid.sample.hard.n_frags]
+threshold = 300
+
+[swift_sid.sample.soft.median_target_cov]
+threshold = 500
+
+[swift_sid.sample.soft.pct_on_target_bases]
+threshold = 90
+
+[swift_sid.sample.soft.q90_q10_ratio]
+threshold = 50
+
+[swift_sid.sample.soft.fold_80_penalty]
+threshold = 15
+
+[swift_sid.sample.soft.pct_target_bases_20x]
+threshold = 90
+
+[swift_lung.run.total_yield]
+threshold = 30
+
+[swift_lung.run.pct_bases_gt_q30]
+threshold = 80
+
+[swift_lung.run.frac_clusters_pf]
+threshold = 0.8
+
+[swift_lung.run.cluster_density.high]
+threshold = 270
+
+[swift_lung.run.cluster_density.low]
+threshold = 120
+
+[swift_lung.sample.hard.n_frags]
+threshold = 300
+
+[swift_lung.sample.soft.median_target_cov]
+threshold = 500
+
+[swift_lung.sample.soft.pct_on_target_bases]
+threshold = 75
+
+[swift_lung.sample.soft.q90_q10_ratio]
+threshold = 50
+
+[swift_lung.sample.soft.fold_80_penalty]
+threshold = 25
+
+[swift_lung.sample.soft.pct_target_bases_20x]
+threshold = 75
+
+[chp2.run.total_yield]
+threshold = 10
+
+[chp2.run.pct_bases_gt_q30]
+threshold = 80
+
+[chp2.run.frac_clusters_pf]
+threshold = 0.8
+
+[chp2.run.cluster_density.high]
+threshold = 270
+
+[chp2.run.cluster_density.low]
+threshold = 120
+
+[chp2.sample.hard.n_frags]
+threshold = 300
+
+[chp2.sample.soft.median_target_cov]
+threshold = 500
+
+[chp2.sample.soft.pct_on_target_bases]
+threshold = 95
+
+[chp2.sample.soft.q90_q10_ratio]
+threshold = 50
+
+[chp2.sample.soft.fold_80_penalty]
+threshold = 10
+
+[chp2.sample.soft.pct_target_bases_20x]
+threshold = 95

@@ -1,0 +1,397 @@
+[workflow]
+name = "scRNA-seq"
+workflow_version = "v0.0.0"
+environment = ""
+request_template_version = "Version information comes for the request request_template_version"
+transcriptome_10x_version = "v3.0.0"
+markers_version = "v0.0.1"
+runid = "na"
+fcid = "na"
+sampleid = "na"
+requestid = "na"
+external_results_base = "Used for dockerized run with mounted path"
+chemistry = "SC3Pv3"
+
+[bin]
+cellranger = "cellranger"
+
+[input]
+input_dir = "/input"
+resources_dir = "gs://dc-bioinformatics-raw/static/GRCh38/transcriptome"
+request = "{.input_dir}/request.xlsx"
+metadata = "{.input_dir}/metadata.tsv"
+run_dir = "{.input_dir}/run"
+reads_dir = "{.input_dir}/reads"
+
+[output]
+output_dir = "/output"
+logs_dir = "{.output_dir}/logs"
+
+log = "{.logs_dir}/{workflow.sampleid}.log"
+
+[scratch]
+scratch_dir = "/tmp"
+local_temp_dir = "{.scratch_dir}/{workflow.requestid}"
+local_shared_dir = "./"
+
+[params]
+threads = 8
+use_introns_for_count = true
+keep_temp = false
+keep_undetermined_reads = false
+depth_to_normalize = 10000
+log_data = true
+scale_data = false
+correct_batch = false
+max_mito_pct_allowed = 20
+max_ribo_pct_allowed = 5
+regress_out_cellcycle = false
+n_pcs = 50
+n_neighbors = 20
+
+# below sections are modified thru interpolation only
+[demux.input]
+run_dir = "{input.run_dir}"
+resources_dir = "{input.resources_dir}/general"
+request = "{input.request}"
+metadata = "{input.metadata}"
+chromium_index = "{.resources_dir}/Dual_Index_Kit_TT_Set_A.csv"
+steps = ["demultiplex", "demultiplex_qc"]
+steps_funcs = ["run_cellranger_mkfastq", "run_sequencing_qc"]
+
+[demux.output]
+output_dir = "{output.output_dir}/{workflow.runid}"
+configs_dir = "{.output_dir}/configs"
+config_global = "{.configs_dir}/{workflow.runid}.config"
+config_local = "{.configs_dir}/{workflow.runid}.local.config"
+ss = "{.output_dir}/samplesheet.csv"
+reports_dir = "{.output_dir}/Reports"
+conversion_stats = "{.output_dir}/Stats/ConversionStats.xml"
+bcl2fastq_stats = "{.output_dir}/Stats/Stats.json"
+metrics_result = "{.output_dir}/metrics/metrics.tsv"
+metrics_result_pq = "{.output_dir}/metrics/metrics.pq"
+fastq_dir = "{.output_dir}/fastq"
+
+[demux.scratch]
+scratch_dir = "{scratch.local_temp_dir}/temp_demux"
+10x_dir = "{workflow.runid}"
+
+[demux.params]
+threads = "{params.threads}"
+keep_undetermined_reads = "{params.keep_undetermined_reads}"
+
+[demux.demultiplex.input]
+run_dir = "{demux.input.run_dir}"
+index = "{demux.input.chromium_index}"
+
+[demux.demultiplex.output]
+fastq_dir = "{demux.scratch.scratch_dir}/{workflow.fcid}"
+ss = "{demux.scratch.scratch_dir}/samplesheet.csv"
+reports_dir = "{demux.scratch.scratch_dir}/Reports"
+conversion_stats = "{demux.scratch.scratch_dir}/Stats/ConversionStats.xml"
+bcl2fastq_stats = "{demux.scratch.scratch_dir}/Stats/Stats.json"
+
+[demux.demultiplex.params]
+runid = "{workflow.runid}"
+run_dir = "{demux.demultiplex.input.run_dir}"
+ss = "{demux.demultiplex.output.ss}"
+output_dir = "{demux.scratch.scratch_dir}"
+threads = "{demux.params.threads}"
+
+[demux.demultiplex_qc.input]
+conversion_stats = "{demux.demultiplex.output.conversion_stats}"
+bcl2fastq_stats = "{demux.demultiplex.output.bcl2fastq_stats}"
+
+[demux.demultiplex_qc.output]
+metrics_result = "{demux.scratch.scratch_dir}/metrics.tsv"
+metrics_result_pq = "{demux.scratch.scratch_dir}/metrics.pq"
+
+[demux.demultiplex_qc.params]
+min_median_reads = 1000000
+min_total_reads = 100000000
+min_fraction_q30 = 0.8
+# add more
+
+[count.input]
+reads_dir = "{input.reads_dir}"
+resources_dir = "{input.resources_dir}"
+request = "{input.request}"
+metadata = "{input.metadata}"
+steps = ["10x", "qc"]
+steps_funcs = ["run_cellranger_count", "run_qc"]
+
+[count.output]
+output_dir = "{output.output_dir}"
+configs_dir = "{.output_dir}/configs"
+analysis_dir = "{.output_dir}/analysis"
+metrics_dir = "{.output_dir}/metrics"
+counts_dir = "{.output_dir}/counts"
+raw_counts_dir = "{.counts_dir}/raw"
+alignments_dir = "{.output_dir}/alignments"
+
+config_global = "{.configs_dir}/{workflow.sampleid}.config"
+config_local = "{.configs_dir}/{workflow.sampleid}.local.config"
+cloupe = "{.analysis_dir}/cloupe.cloupe"
+molecule_info = "{.counts_dir}/molecule_info.h5"
+raw_matrix_h5 = "{.counts_dir}/raw_feature_bc_matrix.h5"
+raw_barcodes = "{.raw_counts_dir}/barcodes.tsv.gz"
+raw_features = "{.raw_counts_dir}/features.tsv.gz"
+raw_matrix = "{.raw_counts_dir}/matrix.mtx.gz"
+filtered_matrix_h5 = "{.counts_dir}/filtered_feature_bc_matrix.h5"
+metrics_result = "{.metrics_dir}/metrics.tsv"
+metrics_result_pq = "{.metrics_dir}/metrics.pq"
+alignments = "{.alignments_dir}/alignments.bam"
+alignments_index = "{.alignments_dir}/alignments.bam.bai"
+summary_report = "{.metrics_dir}/summary.html"
+metadata2 = "{.output_dir}/sample_metadata.tsv"
+
+[count.scratch]
+scratch_dir = "{scratch.local_temp_dir}/temp_count"
+10x_dir = "{workflow.sampleid}"
+
+[count.params]
+threads = "{params.threads}"
+use_introns_for_count = "{params.use_introns_for_count}"
+
+[count.10x.input]
+fastq_dir = "{count.input.reads_dir}"
+transcriptome_dir = "{input.resources_dir}/cellranger/refdata-cellranger-GRCh38-3.0.0"
+
+[count.10x.output]
+10x_dir = "{count.scratch.10x_dir}"
+cloupe = "{.10x_dir}/outs/cloupe.cloupe"
+molecule_info = "{.10x_dir}/outs/molecule_info.h5"
+raw_matrix_h5 = "{.10x_dir}/outs/raw_feature_bc_matrix.h5"
+raw_barcodes = "{.10x_dir}/outs/raw_feature_bc_matrix/barcodes.tsv.gz"
+raw_features = "{.10x_dir}/outs/raw_feature_bc_matrix/features.tsv.gz"
+raw_matrix = "{.10x_dir}/outs/raw_feature_bc_matrix/matrix.mtx.gz"
+filtered_matrix_h5 = "{.10x_dir}/outs/filtered_feature_bc_matrix.h5"
+metrics_summary = "{.10x_dir}/outs/metrics_summary.csv"
+alignments = "{.10x_dir}/outs/possorted_genome_bam.bam"
+alignments_index = "{.10x_dir}/outs/possorted_genome_bam.bam.bai"
+summary_report = "{.10x_dir}/outs/web_summary.html"
+metadata2 = "{.10x_dir}/sample_metadata.tsv"
+
+[count.10x.params]
+id = "{workflow.sampleid}"
+fastqs = "{count.10x.input.fastq_dir}"
+sample = "{workflow.sampleid}"
+transcriptome = "{count.10x.input.transcriptome_dir}"
+use_intron = "{count.params.use_introns_for_count}"
+chemistry = "{workflow.chemistry}"
+threads = "{count.params.threads}"
+
+[count.qc.input]
+sid = "{workflow.sampleid}"
+metrics = "{count.10x.output.metrics_summary}"
+
+[count.qc.output]
+metrics_result = "{count.scratch.scratch_dir}/metrics.tsv"
+metrics_result_pq = "{count.scratch.scratch_dir}/metrics.pq"
+
+[count.qc.params]
+min_number_cells = 10000
+min_reads_per_cell_rate = 0.5
+min_median_genes_per_cell = 250
+min_umi_count_per_cell = 500
+min_total_genes_detected = 500
+
+[analyze.input]
+input_dir = "{input.input_dir}"
+resources_dir = "{input.resources_dir}/general"
+request = "{input.request}"
+metadata = "{input.metadata}"
+steps = ["scanpy"]
+steps_funcs = ["run_scanpy_analysis"]
+
+[analyze.output]
+output_dir = "{output.output_dir}"
+configs_dir = "{.output_dir}/configs"
+config_global = "{.configs_dir}/{workflow.runid}.config"
+config_local = "{.configs_dir}/{workflow.runid}.local.config"
+data_dir = "{.output_dir}/data"
+h5ad = "{.data_dir}/scanpy.h5ad"
+raw_aggregated_h5ad = "{.data_dir}/raw.h5ad"
+qc_filtered_h5ad = "{.data_dir}/qc_filtered.h5ad"
+plot_dir = "{.output_dir}/plots"
+violin_plot_pre = "{.plot_dir}/qc_violin_pre.png"
+scatter_plot_pre = "{.plot_dir}/qc_scatter_pre.png"
+box_plot_pre = "{.plot_dir}/qc_box_pre.png"
+violin_plot = "{.plot_dir}/qc_violin.png"
+scatter_plot = "{.plot_dir}/qc_scatter.png"
+sexbias_plot1 = "{.plot_dir}/qc_sexbias_violin.png"
+sexbias_plot2 = "{.plot_dir}/qc_sexbias_scatter.png"
+cellcycle_plot = "{.plot_dir}/qc_cellcycle.png"
+box_plot = "{.plot_dir}/qc_box.png"
+umap_plot = "{.plot_dir}/umap.png"
+pca_plot = "{.plot_dir}/pca.png"
+hvg_plot = "{.plot_dir}/hvg.png"
+rank_plot = "{.plot_dir}/scanpy_top_ranked_genes.png"
+props_plot = "{.plot_dir}/scanpy_cluster_proportion.png"
+doublet_plot = "{.plot_dir}/qc_doublet.png"
+metrics_dir = "{.output_dir}/metrics"
+preqc_summary = "{.metrics_dir}/preqc_summary.tsv"
+marker_umap_plot = "{.plot_dir}/marker_umap.png"
+marker_dotplot = "{.plot_dir}/marker_dotplot.png"
+marker_matrix_plot = "{.plot_dir}/marker_matrix.png"
+marker_tracks_plot = "{.plot_dir}/marker_tracks.png"
+rank = "{.data_dir}/ranked_genes.tsv"
+pdf_report = "{.data_dir}/plots.pdf"
+
+[analyze.scratch]
+scratch_dir = "{scratch.local_temp_dir}/temp_analysis"
+
+[analyze.params]
+depth_to_normalize = "{params.depth_to_normalize}"
+log_data = "{params.log_data}"
+scale_data = "{params.scale_data}"
+correct_batch = "{params.correct_batch}"
+max_mito_pct_allowed = "{params.max_mito_pct_allowed}"
+max_ribo_pct_allowed = "{params.max_ribo_pct_allowed}"
+regress_out_cellcycle = "{params.regress_out_cellcycle}"
+n_pcs = "{params.n_pcs}"
+n_neighbors = "{params.n_neighbors}"
+
+[analyze.scanpy.input]
+counts_dir = "{analyze.input.input_dir}"
+cellcycle_genes = "{analyze.input.resources_dir}/regev_lab_cell_cycle_genes.txt"
+markers = "{analyze.input.resources_dir}/scRNA_markers_{workflow.markers_version}.tsv"
+
+[analyze.scanpy.output]
+scratch_dir = "{analyze.scratch.scratch_dir}"
+h5ad = "{.scratch_dir}/scanpy.h5ad"
+raw_aggregated_h5ad = "{.scratch_dir}/raw.h5ad"
+qc_filtered_h5ad = "{.scratch_dir}/qc_filtered.h5ad"
+violin_plot_pre = "{.scratch_dir}/qc_violin_pre.png"
+scatter_plot_pre = "{.scratch_dir}/qc_scatter_pre.png"
+box_plot_pre = "{.scratch_dir}/qc_box_pre.png"
+violin_plot = "{.scratch_dir}/qc_violin.png"
+scatter_plot = "{.scratch_dir}/qc_scatter.png"
+sexbias_plot1 = "{.scratch_dir}/qc_sexbias_violin.png"
+sexbias_plot2 = "{.scratch_dir}/qc_sexbias_scatter.png"
+cellcycle_plot = "{.scratch_dir}/qc_cellcycle.png"
+box_plot = "{.scratch_dir}/qc_box.png"
+umap_plot = "{.scratch_dir}/scanpy_umap.png"
+pca_plot = "{.scratch_dir}/scanpy_pca.png"
+hvg_plot = "{.scratch_dir}/scanpy_hvg.png"
+rank_plot = "{.scratch_dir}/scanpy_top_ranked_genes.png"
+props_plot = "{.scratch_dir}/scanpy_cluster_proportion.png"
+doublet_plot = "{.scratch_dir}/qc_doublet.png"
+preqc_summary = "{.scratch_dir}/preqc_summary.tsv"
+marker_umap_plot = "{.scratch_dir}/marker_umap.png"
+marker_dotplot = "{.scratch_dir}/marker_dotplot.png"
+marker_matrix_plot = "{.scratch_dir}/marker_matrix.png"
+marker_tracks_plot = "{.scratch_dir}/marker_tracks.png"
+rank = "{.scratch_dir}/ranked_genes.tsv"
+pdf_report = "{.scratch_dir}/plots.pdf"
+
+[analyze.scanpy.params]
+remove_mito_genes = true
+remove_hb_genes = true
+correct_batch = "{analyze.params.correct_batch}"
+regress_out_cellcycle = "{analyze.params.regress_out_cellcycle}"
+
+filter_genes = ["MALAT1"]
+mt_gene_name = ["MT-"]
+ribo_gene_name= ["RPS", "RPL"]
+hb_gene_name_pattern = "^HB[^(P)]"
+chemistry = "{workflow.chemistry}"
+requestid = "{workflow.requestid}"
+
+min_genes = 200  # min number of genes in a cell
+min_cells = 3  # min number of cells with given gene
+max_pct_counts_mt = "{analyze.params.max_mito_pct_allowed}"
+min_pct_counts_ribo = 0
+max_pct_counts_ribo = "{analyze.params.max_ribo_pct_allowed}"
+
+[analyze.scanpy.params.pca]
+min_mean = 0.0125
+max_mean = 3
+min_disp = 0.5
+max_sd = 10
+n_pcs = "{analyze.params.n_pcs}"
+n_neighbors = "{analyze.params.n_neighbors}"
+svd_solver = "arpack"
+umap_plot = "{analyze.scanpy.output.umap_plot}"
+pca_plot = "{analyze.scanpy.output.pca_plot}"
+hvg_plot = "{analyze.scanpy.output.hvg_plot}"
+use_highly_variable_genes_only = true
+n_top_genes = 5000
+regress_out_variables = ["total_counts", "pct_counts_mt"]
+regress_cellcycle_genes = "{analyze.scanpy.params.regress_out_cellcycle}"
+
+[analyze.scanpy.params.SC3Pv2]
+max_n_genes_by_counts = 2000
+min_n_genes_by_counts = 500
+
+[analyze.scanpy.params.SC3Pv3]
+max_n_genes_by_counts = 4000
+min_n_genes_by_counts = 1000
+
+[analyze.scanpy.params.preQC.violin_plots]
+keys = ["n_genes_by_counts", "total_counts", "pct_counts_mt","pct_counts_ribo", "pct_counts_hb"]
+use_raw = false
+groupby = "sample"
+filename = "{analyze.scanpy.output.violin_plot_pre}"
+
+[analyze.scanpy.params.preQC.scatter_plots]
+use_raw = false
+filename = "{analyze.scanpy.output.scatter_plot_pre}"
+
+[analyze.scanpy.params.preQC.box_plots]
+num_top_genes = 20
+filename = "{analyze.scanpy.output.box_plot_pre}"
+
+[analyze.scanpy.params.QC.violin_plots]
+keys = ["n_genes_by_counts", "total_counts", "pct_counts_mt","pct_counts_ribo", "pct_counts_hb"]
+use_raw = false
+groupby = "sample"
+filename = "{analyze.scanpy.output.violin_plot}"
+
+[analyze.scanpy.params.QC.scatter_plots]
+use_raw = false
+filename = "{analyze.scanpy.output.scatter_plot}"
+
+[analyze.scanpy.params.QC.box_plots]
+num_top_genes = 20
+filename = "{analyze.scanpy.output.box_plot}"
+
+[analyze.scanpy.params.QC.sexbias_plots]
+use_raw = false
+filename1 = "{analyze.scanpy.output.sexbias_plot1}"
+filename2 = "{analyze.scanpy.output.sexbias_plot2}"
+keys = ["XIST-counts", "percent_chrY"]
+groupby = "sample"
+
+[analyze.scanpy.params.QC.cellcycle_plots]
+filename = "{analyze.scanpy.output.cellcycle_plot}"
+keys = ["S_score", "G2M_score"]
+groupby = "sample"
+
+[analyze.scanpy.params.normalize]
+target_depth = "{analyze.params.depth_to_normalize}"
+is_to_log = "{analyze.params.log_data}"
+is_to_scale = "{analyze.params.scale_data}"
+
+[analyze.scanpy.params.doublets]
+filename = "{analyze.scanpy.output.doublet_plot}"
+
+[analyze.scanpy.params.marker_plots]
+markers = "{analyze.scanpy.input.markers}"
+keys = ["leiden_1.0", "sample", "type"]
+color_map = "Blues"
+marker_filename1 = "{analyze.scanpy.output.marker_umap_plot}"
+marker_filename2 = "{analyze.scanpy.output.marker_dotplot}"
+marker_filename3 = "{analyze.scanpy.output.marker_matrix_plot}"
+marker_filename4 = "{analyze.scanpy.output.marker_tracks_plot}"
+
+[analyze.scanpy.params.gene_ranks]
+rank_group = "sample"
+num_genes_from_rank = 25
+filename = "{analyze.scanpy.output.rank}"
+rank_plot = "{analyze.scanpy.output.rank_plot}"
+
+[analyze.scanpy.params.cluster_proportion]
+sample_key = "sample"
+cluster_key = "leiden_1.0"
+filename = "{analyze.scanpy.output.props_plot}"

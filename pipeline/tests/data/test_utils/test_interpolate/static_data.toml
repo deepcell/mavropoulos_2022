@@ -1,0 +1,11 @@
+[human]
+base = ""
+genome = "{.base}/genome/GRCh38_no_alt.p13.genome.fa"
+
+[mouse]
+base = ""
+rrna_fa = "{.base}/index/bwa_rRNA/mm_rRNA.fasta"
+
+[swift]
+panels = "{human.base}/panels"
+sid_snp = "{.panels}/swift_sid/swift_sid.snp.grch38.bed"
